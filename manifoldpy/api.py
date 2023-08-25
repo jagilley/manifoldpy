@@ -9,7 +9,7 @@ import numpy.typing as npt
 import requests
 from attr import define, field
 
-from manifoldpy import config
+# from manifoldpy import config
 
 V0_URL = "https://manifold.markets/api/v0/"
 
@@ -272,9 +272,10 @@ class Market:
         try:
             cls = MARKET_TYPES_MAP[json["outcomeType"]]
         except KeyError:
-            raise ValueError(
-                f'{json["outcomeType"]} isn\'t a known market outcome type. Submit a bug report if the json came from the API.'
-            )
+            # print(
+            #     f'{json["outcomeType"]} isn\'t a known market outcome type. Submit a bug report if the json came from the API.'
+            # )
+            return None
         return weak_structure(json, cls)
 
 

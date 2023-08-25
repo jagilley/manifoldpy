@@ -9,8 +9,7 @@ import scipy
 from matplotlib import pyplot as plt  # type: ignore
 from scipy.stats import beta  # type: ignore
 
-from manifoldpy.api import BinaryMarket, Market
-
+from .api import BinaryMarket, Market
 
 def perfect_calibration(decimals: int) -> np.ndarray:
     p = np.linspace(0, 1, 10**decimals + 1)

@@ -3,7 +3,7 @@ from typing import Any, Dict, List, TypedDict
 
 import pandas as pd
 
-from manifoldpy import api, config
+from . import api, config
 
 
 class Cache(TypedDict):
@@ -94,10 +94,13 @@ def load_full_markets() -> List[api.Market]:
     cache = load_cache()
     markets = {k: api.Market.from_json(v) for k, v in cache["lite_markets"].items()}
     for k, market in markets.items():
+        if market is None:
+            continue
         if k in cache["bets"]:
             bets = cache["bets"][k]
             markets[k].bets = [api.weak_structure(b, api.Bet) for b in bets.values()]
         else:
+            # efifenaif
             market.bets = []
 
         market.comments = []
@@ -117,7 +120,7 @@ def df_from_cache_dict(cache: Cache) -> pd.DataFrame:
 
     # Unlikely to be useful for analysis
     fields.remove("creatorAvatarUrl")
-    fields.remove("creatorUsername")
+    # fields.remove("creatorUsername")
 
     # Not single values
     fields.remove("url")
